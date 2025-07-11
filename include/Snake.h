@@ -2,7 +2,6 @@
 #define __SNAKE_H__
 
 #include <cstdint>
-#include <string>
 
 #include "Coord.h"
 class Game;
@@ -10,8 +9,8 @@ class Snake {
    private:
    protected:
 	Coord body[32];
-	Game* game = 0;	 // Game that snake is running
-	uint8_t name[16] = "Player";
+	Coord prev_tale = {0, 0};  // coordinate of previous tale postion (need fro drawing)
+	Game* game = 0;			   // Game that snake is running
 	uint8_t length = 5;
 	uint8_t head = 4;  // index of the head
 	uint8_t tale = 0;  // index of the tale
@@ -27,14 +26,14 @@ class Snake {
 	}
 	void Stop();
 	friend class Player;
+	friend class Bot;
 
    public:
 	Snake();
 	Snake(short x, short y, char head_shape, char body_shape);
-	inline uint8_t* getname() { return this->name; };
-	void SetName(char* name);
-	void Move();
-	void Draw();
+	void Move();	// moves the snake by dx , dy
+	void Draw();	// draws only changed parts of the snake  (in every frame)
+	void Redraw();	// redraws entire body of the snake
 	~Snake();
 };
 
